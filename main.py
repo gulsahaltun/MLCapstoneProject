@@ -24,7 +24,8 @@ from xgboost import XGBClassifier
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
-
+#import plotly.express as px
+#import plotly.graph_objects as go 
 
 st.title('__Genetic Variant Classifications - Predicting whether a variant will have conflicting clinical classifications.__')
 st.header('__This app is created by Gulsah Altun, Springboard ML Engineering Thermo Fisher Student, 2021__')
@@ -33,10 +34,10 @@ st.sidebar.header('Welcome to my first app that I deployed on streamlit!')
 
 st.sidebar.header('Select one of the pre-trained models to run:')
 
-option_11 = st.sidebar.checkbox('XGboost')
-option_22 = st.sidebar.checkbox('Random Forest')
-option_33 = st.sidebar.checkbox('SVM')
-option_44 = st.sidebar.checkbox('Logistic regression')
+option_1 = st.sidebar.checkbox('XGboost')
+option_2 = st.sidebar.checkbox('Random Forest')
+option_3 = st.sidebar.checkbox('SVM')
+option_4 = st.sidebar.checkbox('Logistic regression')
 
 uploaded_file = st.sidebar.file_uploader(label = "Upload your variants file here:", type =['csv'])
 
@@ -46,8 +47,8 @@ def convert_df(df):
     return df.to_csv().encode('utf-8')
 
 
-global df1 
-global df2
+
+global df1
 
 
 st.header("<---Please upload your variants file on the left side and select an ML model in order to run the app")
@@ -56,63 +57,59 @@ st.header("<---Please upload your variants file on the left side and select an M
   
 if uploaded_file is not None: 
     try: 
-        df2 = pd.read_csv(uploaded_file)
+        df1 = pd.read_csv(uploaded_file)
     except Exception as e: 
         print(e) 
     print(uploaded_file)
     print("upload completed")
-    st.write(df2.head())
+
 
     try:
-        st.write(df2)
+        st.markdown("""
+        #Input data:
+        """)
+        st.write(df1)
     except Exception as e:
         print(e)
-        #st.sidebar.write("please upload a file containing variants")
-    df2.CLASS.value_counts()
-
-    pd.DataFrame([[i, len(df2[i].unique())] for i in df2.columns], columns=['Columns', 'Unique']).set_index('Columns')
 
 
-    st.markdown("""
-    #Numerical data:
-    """)
-    numerics = df2.select_dtypes(exclude=object) 
+    pd.DataFrame([[i, len(df1[i].unique())] for i in df1.columns], columns=['Columns', 'Unique']).set_index('Columns')
 
-    st.write(numerics.head())
+    X_test = df1.select_dtypes(exclude=object) 
 
 
-    st.markdown("""
-    #Numerical data:
-    """)
-    cleaned = numerics.drop(["SSR", "DISTANCE","MOTIF_POS","MOTIF_SCORE_CHANGE","BLOSUM62"],axis=1)
-    final = cleaned.drop(["CLNDISDBINCL","INTRON","HIGH_INF_POS","cDNA_position","CDS_position","CLNDNINCL","CLNSIGINCL","MOTIF_NAME","CHROM","Protein_position"],axis=1)
+
+
+    if option_1:
+        clf_loaded = load('BestModelXGBOOST3.joblib') 
+
+    if option_2:
+        clf_loaded = load('BestModelRANDOMFOREST.joblib')
+        
+    if option_3:
+        clf_loaded = load('ModelSVM.joblib')
     
-    st.write(final.head())
+    if option_4:
+        clf_loaded = load('Model_logreg.joblib')
     
-    X_test = final.drop(['CLASS'],axis=1).values   # independant features
-    y_test = final['CLASS'].values
-
-
-    if option_11:
+    if option_1 or option_2 or option_3 or option_4:
         st.markdown("""
-        #auc score for xgboost:
+        #Results:
         """)
-    
-        clf_XGBloaded = load('BestModel.joblib') 
-        st.write(roc_auc_score(y_test, clf_XGBloaded.predict_proba(X_test)[:,1]))
+        
     
         st.markdown("""
         #Probability of each variant being a conflicting variant:
         """)
-        st.write(clf_XGBloaded.predict_proba(X_test)[:,1] )
-        df4=pd.DataFrame(clf_XGBloaded.predict_proba(X_test)[:,1])
+        st.write(clf_loaded.predict_proba(X_test)[:,1] )
+        df4=pd.DataFrame(clf_loaded.predict_proba(X_test)[:,1])
 
         st.markdown("""
         #Probability of each variant being a non-conflicting variant:
         """)
     
-        st.write(clf_XGBloaded.predict_proba(X_test)[:,0]) 
-        df5=pd.DataFrame(clf_XGBloaded.predict_proba(X_test)[:,0])
+        st.write(clf_loaded.predict_proba(X_test)[:,0]) 
+        df5=pd.DataFrame(clf_loaded.predict_proba(X_test)[:,0])
 
     # Save results as a .csv file
         file_name = "results_file_probability_of_being_nonconflicting_variant.csv"
@@ -126,4 +123,8 @@ if uploaded_file is not None:
                        file_name=file_name,
                        key='download_df')
         file_bytes.close()
+        
+        
+        
+        
  
