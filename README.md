@@ -21,7 +21,6 @@ These variants are (usually manually) classified by clinical laboratories on a c
 from benign, likely benign, uncertain significance, likely pathogenic, and pathogenic. 
 Variants that have conflicting classifications (from laboratory to laboratory) can cause confusion when
 clinicians or researchers try to interpret whether the variant has an impact on the disease of a given patient. 
-https://www.ncbi.nlm.nih.gov/clinvar/
 
 
 ![alt text](https://github.com/gulsahaltun/MLCapstoneProject/blob/master/clinvar-class-fig.png)
