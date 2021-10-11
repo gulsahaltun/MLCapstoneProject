@@ -34,10 +34,10 @@ st.sidebar.header('Welcome to my first app that I deployed on streamlit!')
 
 st.sidebar.header('Select one of the pre-trained models to run:')
 
-option_1 = st.sidebar.radio('XGboost')
-option_2 = st.sidebar.radio('Random Forest')
-option_3 = st.sidebar.radio('SVM')
-option_4 = st.sidebar.radio('Logistic regression')
+option_1 = st.sidebar.checkbox('XGboost')
+option_2 = st.sidebar.checkbox('Random Forest')
+option_3 = st.sidebar.checkbox('SVM')
+option_4 = st.sidebar.checkbox('Logistic regression')
 
 uploaded_file = st.sidebar.file_uploader(label = "Upload your variants file here:", type =['csv'])
 
