@@ -44,7 +44,9 @@ and clinical features.
 In this training dataset each clinvar variant has been labeled as a conflicting or a nonconflicting variant.  There were 48747 nonconflicting variants ​and  16429 conflicting variants which is a good dataset to work with. 
 
  
-* This CSV file was prepared from the raw ClinVar vcf file hosted on the [CLINVAR website](ftp://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh37/clinvar.vcf.gz):
+* This CSV file was prepared from the raw ClinVar vcf file hosted on the CLINVAR ftp site for hg19 (GRCh37) human reference genome: ftp://ftp.ncbi.nlm.nih.gov/pub/clinvar/ 
+
+* For more details on the dataset please visit the [kaggle](https://www.kaggle.com/kevinarvai/clinvar-conflicting) website which included more information and statistics. 
 
 
 
