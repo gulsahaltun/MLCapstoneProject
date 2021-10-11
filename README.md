@@ -24,7 +24,7 @@ clinicians or researchers try to interpret whether the variant has an impact on 
 https://www.ncbi.nlm.nih.gov/clinvar/
 
 
-![alt text](/Users/altung1/20211010_myclone/MLCapstoneProject/clinvar-class-fig.png?raw=true)
+![alt text](https://github.com/gulsahaltun/MLCapstoneProject/blob/master/clinvar-class-fig.png)
 
 (image courtesy of [kaggle](https://www.kaggle.com/kevinarvai/clinvar-conflicting))
 
